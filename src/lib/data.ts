@@ -1,4 +1,3 @@
-
 // Mock data for the Easy Contractor application
 
 export const customers = [
@@ -40,7 +39,7 @@ export const teamMembers = [
     name: "Mike Wilson",
     email: "mike@company.com",
     phone: "(555) 111-2222",
-    role: "Admin" as const,
+    role: "Admin" as "Admin" | "Employee",
     status: "active" as const,
     joinDate: "2023-08-15",
     hoursThisWeek: 32,
@@ -51,7 +50,7 @@ export const teamMembers = [
     name: "John Doe",
     email: "john@company.com",
     phone: "(555) 222-3333",
-    role: "Employee" as const,
+    role: "Employee" as "Admin" | "Employee",
     status: "active" as const,
     joinDate: "2023-09-01",
     hoursThisWeek: 28,
@@ -62,7 +61,7 @@ export const teamMembers = [
     name: "Sarah Chen",
     email: "sarah@company.com",
     phone: "(555) 333-4444",
-    role: "Employee" as const,
+    role: "Employee" as "Admin" | "Employee",
     status: "active" as const,
     joinDate: "2023-10-12",
     hoursThisWeek: 24,
@@ -73,7 +72,7 @@ export const teamMembers = [
     name: "Tom Brown",
     email: "tom@company.com",
     phone: "(555) 444-5555",
-    role: "Employee" as const,
+    role: "Employee" as "Admin" | "Employee",
     status: "active" as const,
     joinDate: "2023-11-03",
     hoursThisWeek: 30,
@@ -93,7 +92,7 @@ export const jobs = [
     duration: 4,
     assignedCrew: ["Mike Wilson", "John Doe"],
     address: "123 Oak Street",
-    priority: "high" as const
+    priority: "high" as "high" | "medium" | "low"
   },
   {
     id: 2,
@@ -106,7 +105,7 @@ export const jobs = [
     duration: 2,
     assignedCrew: ["Sarah Chen"],
     address: "456 Pine Avenue",
-    priority: "medium" as const
+    priority: "medium" as "high" | "medium" | "low"
   },
   {
     id: 3,
@@ -119,7 +118,7 @@ export const jobs = [
     duration: 3,
     assignedCrew: ["Mike Wilson", "Tom Brown"],
     address: "789 Elm Drive",
-    priority: "high" as const
+    priority: "high" as "high" | "medium" | "low"
   }
 ];
 
