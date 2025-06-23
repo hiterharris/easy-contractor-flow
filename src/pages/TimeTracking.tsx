@@ -5,14 +5,32 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Clock, Play, Pause, Calendar, User } from "lucide-react";
+import { Clock, Play, Pause, Calendar, User, Download } from "lucide-react";
+import { EditTimeEntryDialog } from "@/components/EditTimeEntryDialog";
+import { useToast } from "@/hooks/use-toast";
+
+interface TimeEntry {
+  id: number;
+  user: string;
+  job: string;
+  customer: string;
+  date: string;
+  clockIn: string;
+  clockOut: string;
+  breakTime: number;
+  totalHours: number;
+  status: string;
+}
 
 const TimeTracking = () => {
+  const { toast } = useToast();
   const [isClocked, setIsClocked] = useState(false);
   const [currentJob, setCurrentJob] = useState("");
   const [startTime, setStartTime] = useState("");
+  const [editingEntry, setEditingEntry] = useState<TimeEntry | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
-  const timeEntries = [
+  const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([
     {
       id: 1,
       user: "Mike Wilson",
@@ -49,11 +67,11 @@ const TimeTracking = () => {
       totalHours: 0,
       status: "active"
     }
-  ];
+  ]);
 
   const availableJobs = [
     "Kitchen Electrical Install",
-    "Bathroom Outlet Upgrade",
+    "Bathroom Outlet Upgrade",  
     "Panel Replacement"
   ];
 
@@ -83,6 +101,63 @@ const TimeTracking = () => {
     const minutes = Math.floor((diff % 3600000) / 60000);
     const seconds = Math.floor((diff % 60000) / 1000);
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  const handleEditEntry = (entry: TimeEntry) => {
+    setEditingEntry(entry);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleSaveEntry = (updatedEntry: TimeEntry) => {
+    setTimeEntries(entries => 
+      entries.map(entry => 
+        entry.id === updatedEntry.id ? updatedEntry : entry
+      )
+    );
+    toast({
+      title: "Time Entry Updated",
+      description: "The time entry has been successfully updated.",
+    });
+  };
+
+  const handleExportEntry = (entry: TimeEntry) => {
+    const csvContent = `User,Job,Customer,Date,Clock In,Clock Out,Break Time (min),Total Hours,Status\n` +
+      `"${entry.user}","${entry.job}","${entry.customer}","${entry.date}","${entry.clockIn}","${entry.clockOut || 'Active'}","${entry.breakTime}","${entry.totalHours}","${entry.status}"`;
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `time-entry-${entry.id}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    toast({
+      title: "Export Successful",
+      description: "Time entry has been exported to CSV.",
+    });
+  };
+
+  const handleExportAll = () => {
+    const csvContent = `User,Job,Customer,Date,Clock In,Clock Out,Break Time (min),Total Hours,Status\n` +
+      timeEntries.map(entry => 
+        `"${entry.user}","${entry.job}","${entry.customer}","${entry.date}","${entry.clockIn}","${entry.clockOut || 'Active'}","${entry.breakTime}","${entry.totalHours}","${entry.status}"`
+      ).join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `all-time-entries-${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    toast({
+      title: "Export Successful",
+      description: "All time entries have been exported to CSV.",
+    });
   };
 
   return (
@@ -216,7 +291,13 @@ const TimeTracking = () => {
         {/* Time Entries */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Time Entries</CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle>Recent Time Entries</CardTitle>
+              <Button onClick={handleExportAll} variant="outline" size="sm">
+                <Download className="h-4 w-4 mr-2" />
+                Export All
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -254,10 +335,11 @@ const TimeTracking = () => {
                       </div>
                     </div>
                     <div className="flex space-x-2">
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleEditEntry(entry)}>
                         Edit
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => handleExportEntry(entry)}>
+                        <Download className="h-4 w-4 mr-1" />
                         Export
                       </Button>
                     </div>
@@ -267,6 +349,13 @@ const TimeTracking = () => {
             </div>
           </CardContent>
         </Card>
+
+        <EditTimeEntryDialog
+          isOpen={isEditDialogOpen}
+          onClose={() => setIsEditDialogOpen(false)}
+          entry={editingEntry}
+          onSave={handleSaveEntry}
+        />
       </div>
     </Layout>
   );
