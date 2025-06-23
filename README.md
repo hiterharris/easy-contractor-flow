@@ -69,23 +69,3 @@ Lints the project files using ESLint.
 ### `npm run preview`
 
 Serves the production build locally to preview it.
-
-## 📂 Project Structure
-
-```
-easy-contractor-flow/
-├── public/              # Static assets
-├── src/
-│   ├── components/      # Reusable components
-│   │   ├── ui/          # Shadcn UI components
-│   │   └── time-tracking/ # Time tracking specific components
-│   ├── hooks/           # Custom React hooks
-│   ├── lib/             # Utility functions and data
-│   ├── pages/           # Application pages/routes
-│   ├── App.tsx          # Main App component with routing
-│   ├── main.tsx         # Application entry point
-│   └── index.css        # Global styles
-├── package.json         # Project dependencies and scripts
-├── tailwind.config.ts   # Tailwind CSS configuration
-└── vite.config.ts       # Vite configuration
-```
