@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,7 +18,7 @@ const Team = () => {
     name: "",
     email: "",
     phone: "",
-    role: "Employee"
+    role: "Employee" as "Admin" | "Employee"
   });
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -33,7 +34,7 @@ const Team = () => {
         currentJob: ""
       };
       setTeamMembers([...teamMembers, member]);
-      setNewMember({ name: "", email: "", phone: "", role: "Employee" });
+      setNewMember({ name: "", email: "", phone: "", role: "Employee" as "Admin" | "Employee" });
       setIsDialogOpen(false);
     }
   };
@@ -118,7 +119,7 @@ const Team = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="role">Role</Label>
-                  <Select value={newMember.role} onValueChange={(value) => setNewMember({ ...newMember, role: value })}>
+                  <Select value={newMember.role} onValueChange={(value: "Admin" | "Employee") => setNewMember({ ...newMember, role: value })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select role" />
                     </SelectTrigger>
@@ -297,6 +298,32 @@ const Team = () => {
       </div>
     </Layout>
   );
+};
+
+const getRoleColor = (role: string) => {
+  switch (role) {
+    case "Owner":
+      return "bg-purple-100 text-purple-800";
+    case "Admin":
+      return "bg-blue-100 text-blue-800";
+    case "Employee":
+      return "bg-green-100 text-green-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+};
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "active":
+      return "bg-green-100 text-green-800";
+    case "pending":
+      return "bg-yellow-100 text-yellow-800";
+    case "inactive":
+      return "bg-gray-100 text-gray-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
 };
 
 export default Team;

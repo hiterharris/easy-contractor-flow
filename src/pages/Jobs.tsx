@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,7 +23,7 @@ const Jobs = () => {
     scheduledTime: "",
     duration: "",
     address: "",
-    priority: "medium"
+    priority: "medium" as "high" | "medium" | "low"
   });
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -37,7 +38,7 @@ const Jobs = () => {
         ...newJob,
         duration: parseInt(newJob.duration) || 1,
         status: "scheduled" as const,
-        assignedCrew: []
+        assignedCrew: [] as string[]
       };
       setJobs([...jobs, job]);
       setNewJob({
@@ -48,7 +49,7 @@ const Jobs = () => {
         scheduledTime: "",
         duration: "",
         address: "",
-        priority: "medium"
+        priority: "medium" as "high" | "medium" | "low"
       });
       setIsDialogOpen(false);
     }
@@ -132,7 +133,7 @@ const Jobs = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="priority">Priority</Label>
-                  <Select value={newJob.priority} onValueChange={(value) => setNewJob({ ...newJob, priority: value })}>
+                  <Select value={newJob.priority} onValueChange={(value: "high" | "medium" | "low") => setNewJob({ ...newJob, priority: value })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select priority" />
                     </SelectTrigger>
@@ -338,6 +339,34 @@ const Jobs = () => {
       </div>
     </Layout>
   );
+};
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "in-progress":
+      return "bg-green-100 text-green-800";
+    case "scheduled":
+      return "bg-blue-100 text-blue-800";
+    case "completed":
+      return "bg-gray-100 text-gray-800";
+    case "cancelled":
+      return "bg-red-100 text-red-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+};
+
+const getPriorityColor = (priority: string) => {
+  switch (priority) {
+    case "high":
+      return "bg-red-100 text-red-800";
+    case "medium":
+      return "bg-yellow-100 text-yellow-800";
+    case "low":
+      return "bg-green-100 text-green-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
 };
 
 export default Jobs;
