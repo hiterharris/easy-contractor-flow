@@ -7,10 +7,13 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { User, Calendar, Clock, Plus, Building } from "lucide-react";
-import { customers as initialCustomers } from "@/lib/data";
+import { customers as initialCustomers, jobs as initialJobs } from "@/lib/data";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Customers = () => {
   const [customers, setCustomers] = useState(initialCustomers);
+  const [jobs, setJobs] = useState(initialJobs);
 
   const [newCustomer, setNewCustomer] = useState({
     name: "",
@@ -19,7 +22,45 @@ const Customers = () => {
     address: ""
   });
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isCustomerDialogOpen, setIsCustomerDialogOpen] = useState(false);
+  const [isJobDialogOpen, setIsJobDialogOpen] = useState(false);
+
+  const [newJob, setNewJob] = useState({
+    title: "",
+    customer: "",
+    description: "",
+    scheduledDate: "",
+    scheduledTime: "",
+    duration: "",
+    address: "",
+    priority: "medium" as "high" | "medium" | "low"
+  });
+
+  const customerNames = initialCustomers.map(c => c.name);
+
+  const handleAddJob = () => {
+    if (newJob.title && newJob.customer) {
+      const job = {
+        id: jobs.length + 1,
+        ...newJob,
+        duration: parseInt(newJob.duration) || 1,
+        status: "scheduled" as const,
+        assignedCrew: [] as string[],
+      };
+      setJobs([...jobs, job]);
+      setNewJob({
+        title: "",
+        customer: "",
+        description: "",
+        scheduledDate: "",
+        scheduledTime: "",
+        duration: "",
+        address: "",
+        priority: "medium" as "high" | "medium" | "low"
+      });
+      setIsJobDialogOpen(false);
+    }
+  };
 
   const handleAddCustomer = () => {
     if (newCustomer.name && newCustomer.phone) {
@@ -32,8 +73,13 @@ const Customers = () => {
       };
       setCustomers([...customers, customer]);
       setNewCustomer({ name: "", email: "", phone: "", address: "" });
-      setIsDialogOpen(false);
+      setIsCustomerDialogOpen(false);
     }
+  };
+
+  const openCreateJobDialog = (customerName: string) => {
+    setNewJob(prev => ({ ...prev, customer: customerName }));
+    setIsJobDialogOpen(true);
   };
 
   return (
@@ -45,7 +91,7 @@ const Customers = () => {
             <h1 className="text-3xl font-bold text-gray-900">Customers</h1>
             <p className="text-gray-600">Manage your customer database</p>
           </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <Dialog open={isCustomerDialogOpen} onOpenChange={setIsCustomerDialogOpen}>
             <DialogTrigger asChild>
               <Button>
                 <Plus className="h-4 w-4 mr-2" />
@@ -101,7 +147,7 @@ const Customers = () => {
                   <Button onClick={handleAddCustomer} className="flex-1">
                     Add Customer
                   </Button>
-                  <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="flex-1">
+                  <Button variant="outline" onClick={() => setIsCustomerDialogOpen(false)} className="flex-1">
                     Cancel
                   </Button>
                 </div>
@@ -188,7 +234,7 @@ const Customers = () => {
                         <Button variant="outline" size="sm">
                           View History
                         </Button>
-                        <Button size="sm">
+                        <Button size="sm" onClick={() => openCreateJobDialog(customer.name)}>
                           Create Job
                         </Button>
                       </div>
@@ -199,6 +245,109 @@ const Customers = () => {
             </div>
           </CardContent>
         </Card>
+        <Dialog open={isJobDialogOpen} onOpenChange={setIsJobDialogOpen}>
+            <DialogContent className="max-w-2xl">
+              <DialogHeader>
+                <DialogTitle>Create New Job</DialogTitle>
+                <DialogDescription>
+                  Fill in the job details to add it to your schedule.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-2 space-y-2">
+                  <Label htmlFor="title">Job Title *</Label>
+                  <Input
+                    id="title"
+                    placeholder="Kitchen Electrical Install"
+                    value={newJob.title}
+                    onChange={(e) => setNewJob({ ...newJob, title: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="customer">Customer *</Label>
+                  <Select value={newJob.customer} onValueChange={(value) => setNewJob({ ...newJob, customer: value })}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select customer" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {customerNames.map((customer) => (
+                        <SelectItem key={customer} value={customer}>
+                          {customer}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="priority">Priority</Label>
+                  <Select value={newJob.priority} onValueChange={(value: "high" | "medium" | "low") => setNewJob({ ...newJob, priority: value })}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select priority" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="low">Low</SelectItem>
+                      <SelectItem value="medium">Medium</SelectItem>
+                      <SelectItem value="high">High</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="col-span-2 space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Describe the work to be done..."
+                    value={newJob.description}
+                    onChange={(e) => setNewJob({ ...newJob, description: e.target.value })}
+                  />
+                </div>
+                <div className="col-span-2 space-y-2">
+                  <Label htmlFor="address">Job Address</Label>
+                  <Input
+                    id="address"
+                    placeholder="123 Main St, City, State"
+                    value={newJob.address}
+                    onChange={(e) => setNewJob({ ...newJob, address: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="date">Scheduled Date</Label>
+                  <Input
+                    id="date"
+                    type="date"
+                    value={newJob.scheduledDate}
+                    onChange={(e) => setNewJob({ ...newJob, scheduledDate: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="time">Start Time</Label>
+                  <Input
+                    id="time"
+                    type="time"
+                    value={newJob.scheduledTime}
+                    onChange={(e) => setNewJob({ ...newJob, scheduledTime: e.target.value })}
+                  />
+                </div>
+                <div className="col-span-2 space-y-2">
+                  <Label htmlFor="duration">Duration (hours)</Label>
+                  <Input
+                    id="duration"
+                    type="number"
+                    placeholder="4"
+                    value={newJob.duration}
+                    onChange={(e) => setNewJob({ ...newJob, duration: e.target.value })}
+                  />
+                </div>
+                <div className="col-span-2 flex space-x-2 pt-4">
+                  <Button onClick={handleAddJob} className="flex-1">
+                    Create Job
+                  </Button>
+                  <Button variant="outline" onClick={() => setIsJobDialogOpen(false)} className="flex-1">
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
       </div>
     </Layout>
   );

@@ -41,32 +41,6 @@ const Team = () => {
     }
   };
 
-  const getRoleColor = (role: string) => {
-    switch (role) {
-      case "Owner":
-        return "bg-purple-100 text-purple-800";
-      case "Admin":
-        return "bg-blue-100 text-blue-800";
-      case "Employee":
-        return "bg-green-100 text-green-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "inactive":
-        return "bg-gray-100 text-gray-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   return (
     <Layout>
       <div className="space-y-6">
@@ -217,10 +191,10 @@ const Team = () => {
                       <div className="flex-grow">
                         <div className="flex items-center space-x-3 mb-2">
                           <h3 className="text-lg font-semibold text-gray-900">{member.name}</h3>
-                          <Badge className={getRoleColor(member.role)}>
+                          <Badge variant={member.role === 'Admin' ? 'default' : 'secondary'}>
                             {member.role}
                           </Badge>
-                          <Badge className={getStatusColor(member.status)}>
+                          <Badge variant={member.status === 'active' ? 'default' : member.status === 'pending' ? 'secondary' : 'outline'}>
                             {member.status}
                           </Badge>
                         </div>
@@ -300,32 +274,6 @@ const Team = () => {
       </div>
     </Layout>
   );
-};
-
-const getRoleColor = (role: string) => {
-  switch (role) {
-    case "Owner":
-      return "bg-purple-100 text-purple-800";
-    case "Admin":
-      return "bg-blue-100 text-blue-800";
-    case "Employee":
-      return "bg-green-100 text-green-800";
-    default:
-      return "bg-gray-100 text-gray-800";
-  }
-};
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case "active":
-      return "bg-green-100 text-green-800";
-    case "pending":
-      return "bg-yellow-100 text-yellow-800";
-    case "inactive":
-      return "bg-gray-100 text-gray-800";
-    default:
-      return "bg-gray-100 text-gray-800";
-  }
 };
 
 export default Team;
