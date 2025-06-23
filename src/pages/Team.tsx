@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,7 +30,8 @@ const Team = () => {
         status: "pending" as const,
         joinDate: new Date().toISOString().split('T')[0],
         hoursThisWeek: 0,
-        currentJob: ""
+        currentJob: "",
+        role: newMember.role as "Admin" | "Employee"
       };
       setTeamMembers([...teamMembers, member]);
       setNewMember({ name: "", email: "", phone: "", role: "Employee" as "Admin" | "Employee" });

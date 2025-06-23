@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,7 +37,8 @@ const Jobs = () => {
         ...newJob,
         duration: parseInt(newJob.duration) || 1,
         status: "scheduled" as const,
-        assignedCrew: [] as string[]
+        assignedCrew: [] as string[],
+        priority: newJob.priority as "high" | "medium" | "low"
       };
       setJobs([...jobs, job]);
       setNewJob({
