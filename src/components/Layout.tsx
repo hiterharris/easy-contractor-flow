@@ -8,7 +8,7 @@ import {
   Calendar, 
   Clock, 
   User,
-  LayoutDashboard,
+  Home,
   Menu
 } from "lucide-react";
 import { useState } from "react";
@@ -22,7 +22,7 @@ const Layout = ({ children }: LayoutProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigation = [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Home", href: "/home", icon: Home },
     { name: "Customers", href: "/customers", icon: User },
     { name: "Jobs", href: "/jobs", icon: Calendar },
     { name: "Team", href: "/team", icon: Users },
