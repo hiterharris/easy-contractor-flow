@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,54 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Users, User, Clock, Calendar, Plus } from "lucide-react";
+import { teamMembers as initialTeamMembers } from "@/lib/data";
 
 const Team = () => {
-  const [teamMembers, setTeamMembers] = useState([
-    {
-      id: 1,
-      name: "Mike Wilson",
-      email: "mike@company.com",
-      phone: "(555) 111-2222",
-      role: "Admin",
-      status: "active",
-      joinDate: "2023-08-15",
-      hoursThisWeek: 32,
-      currentJob: "Kitchen Electrical Install"
-    },
-    {
-      id: 2,
-      name: "John Doe",
-      email: "john@company.com",
-      phone: "(555) 222-3333",
-      role: "Employee",
-      status: "active",
-      joinDate: "2023-09-01",
-      hoursThisWeek: 28,
-      currentJob: "Kitchen Electrical Install"
-    },
-    {
-      id: 3,
-      name: "Sarah Chen",
-      email: "sarah@company.com",
-      phone: "(555) 333-4444",
-      role: "Employee",
-      status: "active",
-      joinDate: "2023-10-12",
-      hoursThisWeek: 24,
-      currentJob: "Bathroom Outlet Upgrade"
-    },
-    {
-      id: 4,
-      name: "Tom Brown",
-      email: "tom@company.com",
-      phone: "(555) 444-5555",
-      role: "Employee",
-      status: "active",
-      joinDate: "2023-11-03",
-      hoursThisWeek: 30,
-      currentJob: "Panel Replacement"
-    }
-  ]);
+  const [teamMembers, setTeamMembers] = useState(initialTeamMembers);
 
   const [newMember, setNewMember] = useState({
     name: "",
@@ -72,7 +27,7 @@ const Team = () => {
       const member = {
         id: teamMembers.length + 1,
         ...newMember,
-        status: "pending",
+        status: "pending" as const,
         joinDate: new Date().toISOString().split('T')[0],
         hoursThisWeek: 0,
         currentJob: ""

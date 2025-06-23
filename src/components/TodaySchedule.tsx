@@ -3,38 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Clock, User, Calendar } from "lucide-react";
+import { todayJobs } from "@/lib/data";
 
 export const TodaySchedule = () => {
-  const todayJobs = [
-    {
-      id: 1,
-      title: "Kitchen Electrical Install",
-      customer: "Sarah Johnson",
-      time: "8:00 AM - 12:00 PM",
-      crew: ["Mike Wilson", "John Doe"],
-      status: "in-progress",
-      address: "123 Oak Street"
-    },
-    {
-      id: 2,
-      title: "Bathroom Outlet Upgrade",
-      customer: "Robert Smith",
-      time: "1:00 PM - 3:00 PM",
-      crew: ["Sarah Chen"],
-      status: "scheduled",
-      address: "456 Pine Avenue"
-    },
-    {
-      id: 3,
-      title: "Panel Replacement",
-      customer: "Maria Garcia",
-      time: "3:30 PM - 6:00 PM",
-      crew: ["Mike Wilson", "Tom Brown"],
-      status: "scheduled",
-      address: "789 Elm Drive"
-    }
-  ];
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case "in-progress":

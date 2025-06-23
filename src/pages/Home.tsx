@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,6 +22,7 @@ import {
 import { OnboardingChecklist } from "@/components/OnboardingChecklist";
 import { TodaySchedule } from "@/components/TodaySchedule";
 import { ActivityStream } from "@/components/ActivityStream";
+import { recentCustomers, upcomingJobs, teamStatus } from "@/lib/data";
 
 const Home = () => {
   const [onboardingComplete, setOnboardingComplete] = useState(false);
@@ -39,26 +39,6 @@ const Home = () => {
   const completedSteps = onboardingSteps.filter(step => step.completed).length;
   const progressPercentage = (completedSteps / onboardingSteps.length) * 100;
 
-  // Mock data for the home page
-  const recentCustomers = [
-    { id: 1, name: "Springfield Medical", phone: "(555) 123-4567", lastJob: "2024-01-15" },
-    { id: 2, name: "Downtown Office Complex", phone: "(555) 234-5678", lastJob: "2024-01-10" },
-    { id: 3, name: "Riverside Manufacturing", phone: "(555) 345-6789", lastJob: "2023-12-20" }
-  ];
-
-  const upcomingJobs = [
-    { id: 1, title: "Kitchen Install", customer: "Springfield Medical", date: "Tomorrow", time: "8:00 AM" },
-    { id: 2, title: "Panel Upgrade", customer: "Downtown Office", date: "Jan 25", time: "1:00 PM" },
-    { id: 3, title: "Outlet Repair", customer: "Riverside Mfg", date: "Jan 26", time: "9:00 AM" }
-  ];
-
-  const teamStatus = [
-    { name: "Mike Wilson", status: "On Job", location: "Kitchen Install" },
-    { name: "Sarah Chen", status: "Available", location: "Office" },
-    { name: "Tom Brown", status: "En Route", location: "Downtown Office" },
-    { name: "Lisa Park", status: "Off Today", location: "" }
-  ];
-
   if (!onboardingComplete && completedSteps < onboardingSteps.length) {
     return (
       <Layout>
@@ -71,29 +51,6 @@ const Home = () => {
               Let's get you set up in just a few minutes
             </p>
           </div>
-
-          {/* <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <span>Getting Started</span>
-                <Badge variant={completedSteps === onboardingSteps.length ? "default" : "secondary"}>
-                  {completedSteps}/{onboardingSteps.length} Complete
-                </Badge>
-              </CardTitle>
-              <CardDescription>
-                Complete these steps to start managing your contracting business
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="mb-6">
-                <Progress value={progressPercentage} className="h-2" />
-              </div>
-              <OnboardingChecklist 
-                steps={onboardingSteps}
-                onComplete={() => setOnboardingComplete(true)}
-              />
-            </CardContent>
-          </Card> */}
 
           <div className="grid md:grid-cols-2 gap-6">
             <Card>

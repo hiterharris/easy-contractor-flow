@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,40 +7,10 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { User, Calendar, Clock, Plus, Building } from "lucide-react";
+import { customers as initialCustomers } from "@/lib/data";
 
 const Customers = () => {
-  const [customers, setCustomers] = useState([
-    {
-      id: 1,
-      name: "Springfield Medical Center",
-      email: "facilities@springfieldmedical.com",
-      phone: "(555) 123-4567",
-      address: "123 Oak Street, Springfield, IL",
-      totalJobs: 3,
-      lastJob: "2024-01-15",
-      status: "active"
-    },
-    {
-      id: 2,
-      name: "Downtown Office Complex",
-      email: "maintenance@downtownoffice.com",
-      phone: "(555) 234-5678",
-      address: "456 Pine Avenue, Springfield, IL",
-      totalJobs: 1,
-      lastJob: "2024-01-10",
-      status: "active"
-    },
-    {
-      id: 3,
-      name: "Riverside Manufacturing Co.",
-      email: "ops@riversidemanufacturing.com",
-      phone: "(555) 345-6789",
-      address: "789 Elm Drive, Springfield, IL",
-      totalJobs: 2,
-      lastJob: "2023-12-20",
-      status: "inactive"
-    }
-  ]);
+  const [customers, setCustomers] = useState(initialCustomers);
 
   const [newCustomer, setNewCustomer] = useState({
     name: "",
@@ -59,7 +28,7 @@ const Customers = () => {
         ...newCustomer,
         totalJobs: 0,
         lastJob: "",
-        status: "active"
+        status: "active" as const
       };
       setCustomers([...customers, customer]);
       setNewCustomer({ name: "", email: "", phone: "", address: "" });

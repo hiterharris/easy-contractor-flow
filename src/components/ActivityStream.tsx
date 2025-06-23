@@ -2,56 +2,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, CheckCircle, User, Calendar, Users } from "lucide-react";
+import { activities } from "@/lib/data";
 
 export const ActivityStream = () => {
-  const activities = [
-    {
-      id: 1,
-      type: "clock-in",
-      user: "Mike Wilson",
-      message: "clocked in at Kitchen Install",
-      time: "8:02 AM",
-      icon: Clock,
-      color: "text-green-600"
-    },
-    {
-      id: 2,
-      type: "job-complete",
-      user: "Sarah Chen",
-      message: "completed Outlet Repair job",
-      time: "7:45 AM",
-      icon: CheckCircle,
-      color: "text-blue-600"
-    },
-    {
-      id: 3,
-      type: "job-assigned",
-      user: "Tom Brown",
-      message: "was assigned to Panel Replacement",
-      time: "7:30 AM",
-      icon: Calendar,
-      color: "text-purple-600"
-    },
-    {
-      id: 4,
-      type: "team-invite",
-      user: "System",
-      message: "invited new team member Lisa Park",
-      time: "Yesterday",
-      icon: Users,
-      color: "text-orange-600"
-    },
-    {
-      id: 5,
-      type: "customer-added",
-      user: "Admin",
-      message: "added new customer Maria Garcia",
-      time: "Yesterday",
-      icon: User,
-      color: "text-indigo-600"
-    }
-  ];
-
   const getActivityBadge = (type: string) => {
     switch (type) {
       case "clock-in":
@@ -69,6 +22,40 @@ export const ActivityStream = () => {
     }
   };
 
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case "clock-in":
+        return Clock;
+      case "job-complete":
+        return CheckCircle;
+      case "job-assigned":
+        return Calendar;
+      case "team-invite":
+        return Users;
+      case "customer-added":
+        return User;
+      default:
+        return Clock;
+    }
+  };
+
+  const getActivityColor = (type: string) => {
+    switch (type) {
+      case "clock-in":
+        return "text-green-600";
+      case "job-complete":
+        return "text-blue-600";
+      case "job-assigned":
+        return "text-purple-600";
+      case "team-invite":
+        return "text-orange-600";
+      case "customer-added":
+        return "text-indigo-600";
+      default:
+        return "text-gray-600";
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -83,11 +70,12 @@ export const ActivityStream = () => {
       <CardContent>
         <div className="space-y-4">
           {activities.map((activity) => {
-            const Icon = activity.icon;
+            const Icon = getActivityIcon(activity.type);
+            const color = getActivityColor(activity.type);
             return (
               <div key={activity.id} className="flex items-start space-x-3 pb-4 border-b border-gray-100 last:border-b-0">
                 <div className={`flex-shrink-0 p-2 rounded-full bg-gray-100`}>
-                  <Icon className={`h-4 w-4 ${activity.color}`} />
+                  <Icon className={`h-4 w-4 ${color}`} />
                 </div>
                 <div className="flex-grow min-w-0">
                   <div className="flex items-center justify-between mb-1">

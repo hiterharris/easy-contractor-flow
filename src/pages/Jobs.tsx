@@ -9,49 +9,10 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Calendar, Clock, User, Plus, Users } from "lucide-react";
+import { jobs as initialJobs, customers, teamMembers } from "@/lib/data";
 
 const Jobs = () => {
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      title: "Kitchen Electrical Install",
-      customer: "Springfield Medical Center",
-      description: "Install new outlets and lighting in kitchen renovation",
-      status: "in-progress",
-      scheduledDate: "2024-01-20",
-      scheduledTime: "08:00",
-      duration: 4,
-      assignedCrew: ["Mike Wilson", "John Doe"],
-      address: "123 Oak Street",
-      priority: "high"
-    },
-    {
-      id: 2,
-      title: "Bathroom Outlet Upgrade",
-      customer: "Downtown Office Complex",
-      description: "Replace old outlets with GFCI outlets in bathroom",
-      status: "scheduled",
-      scheduledDate: "2024-01-20",
-      scheduledTime: "13:00",
-      duration: 2,
-      assignedCrew: ["Sarah Chen"],
-      address: "456 Pine Avenue",
-      priority: "medium"
-    },
-    {
-      id: 3,
-      title: "Panel Replacement",
-      customer: "Riverside Manufacturing Co.",
-      description: "Replace old electrical panel with modern 200A panel",
-      status: "scheduled",
-      scheduledDate: "2024-01-20",
-      scheduledTime: "15:30",
-      duration: 3,
-      assignedCrew: ["Mike Wilson", "Tom Brown"],
-      address: "789 Elm Drive",
-      priority: "high"
-    }
-  ]);
+  const [jobs, setJobs] = useState(initialJobs);
 
   const [newJob, setNewJob] = useState({
     title: "",
@@ -66,8 +27,8 @@ const Jobs = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const customers = ["Springfield Medical Center", "Downtown Office Complex", "Riverside Manufacturing Co."];
-  const teamMembers = ["Mike Wilson", "John Doe", "Sarah Chen", "Tom Brown"];
+  const customerNames = customers.map(c => c.name);
+  const teamMemberNames = teamMembers.map(m => m.name);
 
   const handleAddJob = () => {
     if (newJob.title && newJob.customer) {
@@ -75,7 +36,7 @@ const Jobs = () => {
         id: jobs.length + 1,
         ...newJob,
         duration: parseInt(newJob.duration) || 1,
-        status: "scheduled",
+        status: "scheduled" as const,
         assignedCrew: []
       };
       setJobs([...jobs, job]);
@@ -161,7 +122,7 @@ const Jobs = () => {
                       <SelectValue placeholder="Select customer" />
                     </SelectTrigger>
                     <SelectContent>
-                      {customers.map((customer) => (
+                      {customerNames.map((customer) => (
                         <SelectItem key={customer} value={customer}>
                           {customer}
                         </SelectItem>
