@@ -1,3 +1,4 @@
+
 // Mock data for the Easy Contractor application
 
 export const customers = [
@@ -40,7 +41,7 @@ export const teamMembers = [
     email: "mike@company.com",
     phone: "(555) 111-2222",
     role: "Admin" as "Admin" | "Employee",
-    status: "active" as const,
+    status: "active" as "active" | "pending" | "inactive",
     joinDate: "2023-08-15",
     hoursThisWeek: 32,
     currentJob: "Kitchen Electrical Install"
@@ -51,7 +52,7 @@ export const teamMembers = [
     email: "john@company.com",
     phone: "(555) 222-3333",
     role: "Employee" as "Admin" | "Employee",
-    status: "active" as const,
+    status: "active" as "active" | "pending" | "inactive",
     joinDate: "2023-09-01",
     hoursThisWeek: 28,
     currentJob: "Kitchen Electrical Install"
@@ -62,7 +63,7 @@ export const teamMembers = [
     email: "sarah@company.com",
     phone: "(555) 333-4444",
     role: "Employee" as "Admin" | "Employee",
-    status: "active" as const,
+    status: "active" as "active" | "pending" | "inactive",
     joinDate: "2023-10-12",
     hoursThisWeek: 24,
     currentJob: "Bathroom Outlet Upgrade"
@@ -73,7 +74,7 @@ export const teamMembers = [
     email: "tom@company.com",
     phone: "(555) 444-5555",
     role: "Employee" as "Admin" | "Employee",
-    status: "active" as const,
+    status: "active" as "active" | "pending" | "inactive",
     joinDate: "2023-11-03",
     hoursThisWeek: 30,
     currentJob: "Panel Replacement"
