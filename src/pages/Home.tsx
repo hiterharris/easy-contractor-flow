@@ -72,7 +72,7 @@ const Home = () => {
             </p>
           </div>
 
-          <Card className="mb-8">
+          {/* <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Getting Started</span>
@@ -93,7 +93,7 @@ const Home = () => {
                 onComplete={() => setOnboardingComplete(true)}
               />
             </CardContent>
-          </Card>
+          </Card> */}
 
           <div className="grid md:grid-cols-2 gap-6">
             <Card>
