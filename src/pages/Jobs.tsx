@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +15,7 @@ const Jobs = () => {
     {
       id: 1,
       title: "Kitchen Electrical Install",
-      customer: "Sarah Johnson",
+      customer: "Springfield Medical Center",
       description: "Install new outlets and lighting in kitchen renovation",
       status: "in-progress",
       scheduledDate: "2024-01-20",
@@ -29,7 +28,7 @@ const Jobs = () => {
     {
       id: 2,
       title: "Bathroom Outlet Upgrade",
-      customer: "Robert Smith",
+      customer: "Downtown Office Complex",
       description: "Replace old outlets with GFCI outlets in bathroom",
       status: "scheduled",
       scheduledDate: "2024-01-20",
@@ -42,7 +41,7 @@ const Jobs = () => {
     {
       id: 3,
       title: "Panel Replacement",
-      customer: "Maria Garcia",
+      customer: "Riverside Manufacturing Co.",
       description: "Replace old electrical panel with modern 200A panel",
       status: "scheduled",
       scheduledDate: "2024-01-20",
@@ -67,7 +66,7 @@ const Jobs = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const customers = ["Sarah Johnson", "Robert Smith", "Maria Garcia"];
+  const customers = ["Springfield Medical Center", "Downtown Office Complex", "Riverside Manufacturing Co."];
   const teamMembers = ["Mike Wilson", "John Doe", "Sarah Chen", "Tom Brown"];
 
   const handleAddJob = () => {

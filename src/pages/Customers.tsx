@@ -7,14 +7,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { User, Calendar, Clock, Plus } from "lucide-react";
+import { User, Calendar, Clock, Plus, Building } from "lucide-react";
 
 const Customers = () => {
   const [customers, setCustomers] = useState([
     {
       id: 1,
-      name: "Sarah Johnson",
-      email: "sarah@email.com",
+      name: "Springfield Medical Center",
+      email: "facilities@springfieldmedical.com",
       phone: "(555) 123-4567",
       address: "123 Oak Street, Springfield, IL",
       totalJobs: 3,
@@ -23,8 +23,8 @@ const Customers = () => {
     },
     {
       id: 2,
-      name: "Robert Smith",
-      email: "robert@email.com",
+      name: "Downtown Office Complex",
+      email: "maintenance@downtownoffice.com",
       phone: "(555) 234-5678",
       address: "456 Pine Avenue, Springfield, IL",
       totalJobs: 1,
@@ -33,8 +33,8 @@ const Customers = () => {
     },
     {
       id: 3,
-      name: "Maria Garcia",
-      email: "maria@email.com",
+      name: "Riverside Manufacturing Co.",
+      email: "ops@riversidemanufacturing.com",
       phone: "(555) 345-6789",
       address: "789 Elm Drive, Springfield, IL",
       totalJobs: 2,
@@ -87,15 +87,15 @@ const Customers = () => {
               <DialogHeader>
                 <DialogTitle>Add New Customer</DialogTitle>
                 <DialogDescription>
-                  Enter the customer's information to add them to your database.
+                  Enter the company information to add them to your database.
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Customer Name *</Label>
+                  <Label htmlFor="name">Company Name *</Label>
                   <Input
                     id="name"
-                    placeholder="John Doe"
+                    placeholder="Acme Corporation"
                     value={newCustomer.name}
                     onChange={(e) => setNewCustomer({ ...newCustomer, name: e.target.value })}
                   />
@@ -105,7 +105,7 @@ const Customers = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="info@acmecorp.com"
                     value={newCustomer.email}
                     onChange={(e) => setNewCustomer({ ...newCustomer, email: e.target.value })}
                   />
@@ -123,7 +123,7 @@ const Customers = () => {
                   <Label htmlFor="address">Address</Label>
                   <Input
                     id="address"
-                    placeholder="123 Main St, City, State"
+                    placeholder="123 Business St, City, State"
                     value={newCustomer.address}
                     onChange={(e) => setNewCustomer({ ...newCustomer, address: e.target.value })}
                   />
@@ -146,7 +146,7 @@ const Customers = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <User className="h-8 w-8 text-blue-600" />
+                <Building className="h-8 w-8 text-blue-600" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Total Customers</p>
                   <p className="text-2xl font-bold">{customers.length}</p>
@@ -193,9 +193,7 @@ const Customers = () => {
                     <div className="flex-grow">
                       <div className="flex items-center space-x-3 mb-2">
                         <div className="h-10 w-10 bg-blue-600 rounded-full flex items-center justify-center">
-                          <span className="text-white font-medium">
-                            {customer.name.split(' ').map(n => n[0]).join('')}
-                          </span>
+                          <Building className="h-5 w-5 text-white" />
                         </div>
                         <div>
                           <h3 className="font-semibold text-gray-900">{customer.name}</h3>
