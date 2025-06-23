@@ -26,12 +26,14 @@ const Team = () => {
     if (newMember.name && newMember.email) {
       const member = {
         id: teamMembers.length + 1,
-        ...newMember,
+        name: newMember.name,
+        email: newMember.email,
+        phone: newMember.phone,
+        role: newMember.role,
         status: "pending" as const,
         joinDate: new Date().toISOString().split('T')[0],
         hoursThisWeek: 0,
-        currentJob: "",
-        role: newMember.role as "Admin" | "Employee"
+        currentJob: ""
       };
       setTeamMembers([...teamMembers, member]);
       setNewMember({ name: "", email: "", phone: "", role: "Employee" as "Admin" | "Employee" });

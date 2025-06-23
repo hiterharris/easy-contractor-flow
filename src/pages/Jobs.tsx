@@ -34,11 +34,16 @@ const Jobs = () => {
     if (newJob.title && newJob.customer) {
       const job = {
         id: jobs.length + 1,
-        ...newJob,
+        title: newJob.title,
+        customer: newJob.customer,
+        description: newJob.description,
+        scheduledDate: newJob.scheduledDate,
+        scheduledTime: newJob.scheduledTime,
+        address: newJob.address,
         duration: parseInt(newJob.duration) || 1,
         status: "scheduled" as const,
         assignedCrew: [] as string[],
-        priority: newJob.priority as "high" | "medium" | "low"
+        priority: newJob.priority
       };
       setJobs([...jobs, job]);
       setNewJob({
