@@ -1,45 +1,13 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Users, Calendar, Clock, User } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [isSignedUp, setIsSignedUp] = useState(false);
-
-  const handleSignUp = () => {
-    setIsSignedUp(true);
-    // Simulate sign up process
-    setTimeout(() => {
-      navigate("/dashboard");
-    }, 1500);
-  };
-
-  if (isSignedUp) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md text-center">
-          <CardContent className="pt-6">
-            <CheckCircle className="mx-auto mb-4 h-16 w-16 text-green-500" />
-            <h2 className="text-2xl font-bold mb-2">Welcome to Easy Contractor!</h2>
-            <p className="text-muted-foreground mb-4">
-              Setting up your workspace...
-            </p>
-            <div className="animate-pulse">
-              <div className="h-2 bg-blue-200 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500 rounded-full w-full animate-pulse"></div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -53,7 +21,12 @@ const Index = () => {
               </div>
               <h1 className="text-2xl font-bold text-gray-900">Easy Contractor</h1>
             </div>
-            <Badge variant="secondary">MVP Beta</Badge>
+            <div className="flex items-center space-x-4">
+              <Badge variant="secondary">MVP Beta</Badge>
+              <Link to="/auth">
+                <Button variant="outline">Sign In</Button>
+              </Link>
+            </div>
           </div>
         </div>
       </header>
@@ -109,59 +82,34 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Right Column - Sign Up Form */}
+          {/* Right Column - Call to Action */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <Card className="border-0 shadow-none">
               <CardHeader className="text-center pb-6">
-                <CardTitle className="text-2xl">Get Started Today</CardTitle>
+                <CardTitle className="text-2xl">Ready to Get Started?</CardTitle>
                 <CardDescription>
-                  Create your contractor workspace in under 2 minutes
+                  Join contractors who are already streamlining their operations
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="company">Company Name</Label>
-                  <Input 
-                    id="company" 
-                    placeholder="Your Contracting Company" 
-                    className="h-12"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input 
-                    id="email" 
-                    type="email" 
-                    placeholder="you@yourcompany.com" 
-                    className="h-12"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input 
-                    id="phone" 
-                    type="tel" 
-                    placeholder="(555) 123-4567" 
-                    className="h-12"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="trade">Primary Trade</Label>
-                  <Input 
-                    id="trade" 
-                    placeholder="e.g., Electrical, HVAC, Plumbing" 
-                    className="h-12"
-                  />
-                </div>
-                <Button 
-                  onClick={handleSignUp}
-                  className="w-full h-12 text-lg bg-blue-600 hover:bg-blue-700"
-                >
-                  Start Your Free Trial
-                </Button>
+                <Link to="/auth" className="block">
+                  <Button 
+                    className="w-full h-12 text-lg bg-blue-600 hover:bg-blue-700"
+                  >
+                    Start Your Free Trial
+                  </Button>
+                </Link>
                 <p className="text-xs text-center text-gray-500">
                   No credit card required • 14-day free trial
                 </p>
+                <div className="text-center pt-4">
+                  <p className="text-sm text-gray-600 mb-2">Already have an account?</p>
+                  <Link to="/auth">
+                    <Button variant="link" className="p-0 h-auto">
+                      Sign in here
+                    </Button>
+                  </Link>
+                </div>
               </CardContent>
             </Card>
           </div>
