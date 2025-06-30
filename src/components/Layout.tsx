@@ -3,15 +3,13 @@ import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useAuth } from "@/contexts/AuthContext";
 import { 
   Users, 
   Calendar, 
   Clock, 
   User,
   Home,
-  Menu,
-  LogOut
+  Menu
 } from "lucide-react";
 import { useState } from "react";
 
@@ -21,7 +19,6 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
-  const { user, signOut } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigation = [
@@ -31,10 +28,6 @@ const Layout = ({ children }: LayoutProps) => {
     { name: "Team", href: "/team", icon: Users },
     { name: "Time", href: "/time", icon: Clock },
   ];
-
-  const handleSignOut = async () => {
-    await signOut();
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -85,16 +78,10 @@ const Layout = ({ children }: LayoutProps) => {
 
             {/* User Menu */}
             <div className="hidden md:flex items-center space-x-4">
-              <Badge variant="outline">{user?.email}</Badge>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleSignOut}
-                className="flex items-center space-x-2"
-              >
-                <LogOut className="h-4 w-4" />
-                <span>Sign Out</span>
-              </Button>
+              <Badge variant="outline">Demo User</Badge>
+              <div className="h-8 w-8 bg-blue-600 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-medium">JD</span>
+              </div>
             </div>
           </div>
 
@@ -121,14 +108,6 @@ const Layout = ({ children }: LayoutProps) => {
                     </Link>
                   );
                 })}
-                <Button
-                  variant="ghost"
-                  onClick={handleSignOut}
-                  className="w-full justify-start px-3 py-2 text-sm font-medium text-gray-600"
-                >
-                  <LogOut className="h-4 w-4 mr-3" />
-                  Sign Out
-                </Button>
               </nav>
             </div>
           )}
