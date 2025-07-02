@@ -200,6 +200,9 @@ export const recentCustomers = [
 export const upcomingJobs = [
   { id: 1, title: "Kitchen Install", customer: "Springfield Medical", date: "Tomorrow", time: "8:00 AM" },
   { id: 2, title: "Panel Upgrade", customer: "Downtown Office", date: "Jan 25", time: "1:00 PM" },
+  { id: 3, title: "Outlet Repair", customer: "Riverside Mfg", date: "Jan 26", time: "9:00 AM" },
+  { id: 1, title: "Kitchen Install", customer: "Springfield Medical", date: "Tomorrow", time: "8:00 AM" },
+  { id: 2, title: "Panel Upgrade", customer: "Downtown Office", date: "Jan 25", time: "1:00 PM" },
   { id: 3, title: "Outlet Repair", customer: "Riverside Mfg", date: "Jan 26", time: "9:00 AM" }
 ];
 
